@@ -1,4 +1,4 @@
-# This program is a CLI interface that uses ASCII characters to visualize data sent from an ultrasonic sensor made using an ESP8266, servo and an ultrasonic sensor.
+# This program is a CLI interface that uses ASCII characters to visualize data sent from an ultrasonic radar made using an ESP8266, servo and an ultrasonic sensor.
 
 ## There are two ends in this system: 
 
