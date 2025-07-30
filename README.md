@@ -7,8 +7,8 @@
 
 ## To get started you'll need to setup both ends:
 
-- **The ESP end**: Open the ESP folder and upload the Radar.io sketch on the ESP8266. *Make sure the ESP is connected to the appropriate port (in the current code it would be COM8, if you're unsure of the COM port your ESP is connected to you can check in the device manager and sending over serial with 115200 baud rate and that no other program is reading serial data aside from this RadarInterface.* 
-- **The desktop end**: simply compile and run the main.cpp file
+- **The ESP end**: Open the ESP folder and upload the Radar.io sketch on the ESP8266. Make sure the ESP is connected to the appropriate port *(in the current code it would be COM8, if you're unsure of the COM port your ESP is connected to you can check in the device manager)* and sending over serial with 115200 baud rate and that no other program is reading serial data aside from this RadarInterface.
+- **The desktop end**: simply compile and run the main.cpp file.
 
 *A schematic of the radar connections will be provided soon*
 
