@@ -43,10 +43,6 @@ void frame(int& Horizontal, int& Vertical) {
 				else if (0 < x && x < width) {
 					//Among the borders if this is where the collision was detected draw an x, otherwise draw empty space
 
-					//______________Maybe add delay here to give a chance for the XY coordinates to update_______________________
-					//________Also try sending the ultrasonic signals here to update Horizontal and Vertical coordinates_________
-					//_____________________________________Everything above is BS________________________________________________
-
 					if (x == Horizontal && y == Vertical) {
 
 						cout << "X ";
@@ -117,16 +113,11 @@ int main() {
 
         while (true) {
 
-			//double distance = stof(esp.readline());
-
-			//double angle = 95.00;
-
 			string sentence = esp.readline();
 			size_t delimiterPos = sentence.find(','); //size_t is an unsigned variable type
 
 			double distance = stof(sentence.substr(0, delimiterPos));
 			double angle = stof(sentence.substr(delimiterPos + 1));
-
 
 			int x = Xcoordinate(distance, angle);
 			int y = Ycoordinate(distance, angle);
