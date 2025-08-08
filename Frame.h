@@ -1,26 +1,19 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
 #include "Point.h"
 
 class Frame {
 
 private:
 
-	int width;
-	int height;
-
-	std::string VerticalBounds;
-	std::string InnerSpace;
-
-	std::string repeat(std::string String, int times);
+	const int width = 100; 
+	const int height = 50; //EMPTY SPACE BETWEEN BORDERS
 
 public:
 
-	Frame();
-	Frame(int Width, int Height);
-
-	void renderFrame(Point& hit);
+	void renderFrame(Point hits[], int size);
 
 	int getWidth();
 	int getHeight();

@@ -10,9 +10,12 @@ using namespace serial;
 int main() {
 
     Frame frame;
+    int frameWidth = frame.getWidth();
 
     string sentence;
-    size_t delimiterPos;
+    size_t delimiterPos; //size_t is an unsigned variable type
+
+    Point Points[90]; //The radar rotates 2 degrees at a time. So after sweeping the 180 degrees it sends 90 readings or "points".
 
     double distance;
     double angle;
@@ -23,14 +26,18 @@ int main() {
         while (true) {
 
 			sentence = esp.readline();
-			delimiterPos = sentence.find(','); //size_t is an unsigned variable type
+			delimiterPos = sentence.find(','); 
 
 			distance = stof(sentence.substr(0, delimiterPos));
 			angle = stof(sentence.substr(delimiterPos + 1));
 
-            Point hit(angle, distance, frame.getWidth(), frame.getHeight());
+            Point newPoint(angle, distance, frameWidth, frame.getHeight());
 
-			frame.renderFrame(hit);
+            int index = (angle / 2) -1;
+
+            Points[index] = newPoint;
+
+			frame.renderFrame(Points, 90);
 			system("cls");
 
         }
