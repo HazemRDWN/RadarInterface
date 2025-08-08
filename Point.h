@@ -15,6 +15,7 @@ private:
 
 public:
 
+	Point();
 	Point(double Angle, double Distance, int Width, int Height);
 
 	int getX();

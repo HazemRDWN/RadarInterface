@@ -21,6 +21,7 @@ int Point::Ycoordinate(double distance, double angle) {
 
 }
 
+Point::Point(): Y(1024), X(1024) {} //Default to 1024 because that is the highest reading the sensor sends
 Point::Point(double Angle, double Distance, int Width, int Height): X(Xcoordinate(Distance, Angle)), Y(Ycoordinate(Distance, Angle)), frameWidth(Width), frameHeight(Height){}
 
 int Point::getX() { return X; }
