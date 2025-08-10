@@ -14,7 +14,7 @@
 
 # Development notes:
 
-- The ultra-sonic sensor's operating voltage is 5V but at that voltage it would send the ECHO signal to the ESP at 5V, that is a problem because the ESP's GIO pins use 3V logic.
+- The ultra-sonic sensor's operating voltage is 5V but at that voltage it would send the ECHO signal to the ESP at 5V, that is a problem because the ESP's GPIO pins use 3V logic.
     - *This should be solved by connecting a resistor in series between the ECHO and the GIO pins, while keeping the sensor at operating voltage. In my case a resistor was not available so the sensor operates at 3V coming from the ESP.*
 
 - The frame rendering was done on the ESP in the beginning which resulted in the frames appearing slowly. This was caused by the large amount of serial prints being sent in a short time crowding the buffer resulting in a queue.
