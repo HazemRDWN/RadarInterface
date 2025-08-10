@@ -18,7 +18,7 @@
     - *This should be solved by connecting a resistor in series between the ECHO and the GIO pins, while keeping the sensor at operating voltage. In my case a resistor was not available so the sensor operates at 3V coming from the ESP.*
 
 - The frame rendering was done on the ESP in the beginning which resulted in the frames appearing slowly. This was caused by the large amount of serial prints being sent in a short time crowding the buffer resulting in a queue.
-    - *This was solved by transfering the frame rendering to the device that will actually show the frames, the computer, allowing the ESP to only send angle and distance readings.*
+    - *This was solved by transferring the frame rendering to the device that will actually show the frames, the computer, allowing the ESP to only send angle and distance readings.*
 
 - The frames were being printed character by character in the console which was very ineffecient and showed while the frame was being displayed.
     - *This was solved by "pre-rendering" the lines that do not include hits and printing them entirely, only printing character by character in lines that do include hits.*
