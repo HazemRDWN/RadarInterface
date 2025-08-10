@@ -15,13 +15,13 @@
 # Development notes:
 
 - The ultra-sonic sensor's operating voltage is 5V but at that voltage it would send the ECHO signal to the ESP at 5V, that is a problem because the ESP's GPIO pins use 3V logic.
-    - *This should be solved by connecting a resistor in series between the ECHO and the GIO pins, while keeping the sensor at operating voltage. In my case a resistor was not available so the sensor operates at 3V coming from the ESP.*
+    - *This should be solved by connecting a resistor in series between the ECHO and the GPIO pins, while keeping the sensor at operating voltage. In my case a resistor was not available so the sensor operates at 3V coming from the ESP.*
 
 - The frame rendering was done on the ESP in the beginning which resulted in the frames appearing slowly. This was caused by the large amount of serial prints being sent in a short time crowding the buffer resulting in a queue.
-    - *This was solved by transferring the frame rendering to the device that will actually show the frames, the computer, allowing the ESP to only send angle and distance readings.*
+    - *Solution: transferring the frame rendering to the device that will show the frames, the computer, allowing the ESP to only send angle and distance readings.*
 
 - The frames were being printed character by character in the console which was very ineffecient and showed while the frame was being displayed.
-    - *This was solved by "pre-rendering" the lines that do not include hits and printing them entirely, only printing character by character in lines that do include hits.*
+    - *Solution: "pre-rendering" the lines that do not include hits and printing them entirely, only printing character by character in lines that include hits.*
 
-- Showing more than one hit per frame was difficult to implement because the code was cluttered and full of loops, the logic barely held together.
-    - *This was solved by restructuring the logic into a way that was easier to follow and expand on, using a 2D vector to build the frame adding all the hits in their corresponding coordinates.*
+- Showing more than one hit per frame was difficult to implement because the code was cluttered with loops, the logic barely held together.
+    - *Solution: restructuring the logic into a way that was easier to follow and expand on, using a 2D vector to build the frame adding all the hits in their corresponding coordinates.*
