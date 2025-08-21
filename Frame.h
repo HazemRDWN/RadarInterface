@@ -9,9 +9,11 @@ class Frame {
 private:
 
 	const int width = 100; 
-	const int height = 50; //EMPTY SPACE BETWEEN BORDERS
+	const int height = 51; 
 
 public:
+
+	bool isWithinBorder(Point point);
 
 	void renderFrame(Point hits[], int size);
 

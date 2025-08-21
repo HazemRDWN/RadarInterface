@@ -6,17 +6,26 @@ int Frame::getHeight() { return height; }
 
 int Frame::getWidth() { return width; }
 
+bool Frame::isWithinBorder(Point point) {
+
+	if (point.getX() < (width - 1) && point.getY() < (height - 1) && point.getX() > 0 && point.getY() > 0) {
+
+		return true;
+
+	} 
+	else { return false; }
+
+}
+
 void Frame::renderFrame(Point hits[], int size) { //Visualizes hits given coordinates starting from the top left, each centimeter in the X-axis is a space and each centimeter in the Y-axis is a new line
 
 	vector<vector<string>> frameArray(height, vector<string>(width, "  "));
 
 	for (int pointIndex = 0; pointIndex < size; pointIndex++) { //Mapping all the hits
 
-		if (hits[pointIndex].getX() < (width - 1) && hits[pointIndex].getY() < (height -1) && hits[pointIndex].getX() > 0 && hits[pointIndex].getY() > 0) {
+		if (isWithinBorder(hits[pointIndex])) {
 
 			frameArray[hits[pointIndex].getY()][hits[pointIndex].getX()] = "X ";
-
-			/*cout << "Y: " << hits[pointIndex].getY() << ", X: " << hits[pointIndex].getX() << endl;*/
 
 		}
 
