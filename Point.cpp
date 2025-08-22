@@ -3,7 +3,9 @@
 
 int Point::Xcoordinate(double distance, double angle) {
 
-	double cartesian = distance * cos(angle * (22.00 / 7.00) / 180.00); //Get the cartesian coordinate from the polar coordinate
+	double radianAngle = angle * (22.00 / 7.00) / 180.00;
+
+	double cartesian = distance * cos(radianAngle); //Get the cartesian coordinate from the polar coordinate
 
 	int console = cartesian + (frameWidth / 2); //Translate the origin to the center of the console
 
@@ -13,7 +15,9 @@ int Point::Xcoordinate(double distance, double angle) {
 
 int Point::Ycoordinate(double distance, double angle) {
 
-	double cartesian = distance * sin(angle * (22.00 / 7.00) / 180.00);
+	double radianAngle = angle * (22.00 / 7.00) / 180.00;
+
+	double cartesian = distance * sin(radianAngle);
 
 	int console = frameHeight - cartesian;
 

@@ -13,9 +13,7 @@ private:
 
 public:
 
-	bool isWithinBorder(Point point);
-
-	void renderFrame(Point hits[], int size);
+	void renderFrame(std::vector<Point> hits, int size);
 
 	int getWidth();
 	int getHeight();
