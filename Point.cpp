@@ -1,7 +1,7 @@
 #include "Point.h"
 #include <cstdlib>
 
-int Point::Xcoordinate(double distance, double angle) {
+int Point::Xcoordinate(double distance, double angle) const {
 
 	double radianAngle = angle * (22.00 / 7.00) / 180.00;
 
@@ -13,7 +13,7 @@ int Point::Xcoordinate(double distance, double angle) {
 
 }
 
-int Point::Ycoordinate(double distance, double angle) {
+int Point::Ycoordinate(double distance, double angle) const {
 
 	double radianAngle = angle * (22.00 / 7.00) / 180.00;
 
@@ -28,6 +28,6 @@ int Point::Ycoordinate(double distance, double angle) {
 Point::Point(): Y(1024), X(1024) {} //Default to 1024 because that is the highest reading the sensor sends
 Point::Point(double Angle, double Distance, int Width, int Height): X(Xcoordinate(Distance, Angle)), Y(Ycoordinate(Distance, Angle)), frameWidth(Width), frameHeight(Height){}
 
-int Point::getX() { return X; }
+int Point::getX() const { return X; }
 
-int Point::getY() { return Y; }
+int Point::getY() const { return Y; }

@@ -11,11 +11,13 @@ private:
 	const int width = 100; 
 	const int height = 50; 
 
+	void printFrame(std::vector<std::vector<std::string>> hits) const;
+
 public:
 
-	void renderFrame(std::vector<Point> hits, int size);
+	void renderFrame(std::vector<Point> hits, int size) const;
 
-	int getWidth();
-	int getHeight();
+	int getWidth() const;
+	int getHeight() const;
 
 };

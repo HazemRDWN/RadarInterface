@@ -1,13 +1,34 @@
 #include "Frame.h"
 #include <string>
+#include <sstream>
 
 using namespace std;
 
-int Frame::getHeight() { return height; }
+int Frame::getHeight() const { return height; }
 
-int Frame::getWidth() { return width; }
+int Frame::getWidth() const { return width; }
 
-void Frame::renderFrame(vector<Point> hits, int size) { //Visualizes hits given coordinates starting from the top left, each centimeter in the X-axis is a space and each centimeter in the Y-axis is a new line
+void Frame::printFrame(std::vector<std::vector<std::string>> finishedFrame) const {
+
+	stringstream Output;
+
+	for (int y = 0; y < height; y++) {
+
+		for (int x = 0; x < width; x++) {
+
+			Output << finishedFrame[y][x];
+
+		}
+
+		Output << "\n";
+
+	}
+
+	cout << Output.str();
+
+}
+
+void Frame::renderFrame(vector<Point> hits, int size) const { //Visualizes hits given coordinates starting from the top left, each centimeter in the X-axis is a space and each centimeter in the Y-axis is a new line
 
 	vector<vector<string>> frameArray(height, vector<string>(width, "  "));
 
@@ -58,20 +79,6 @@ void Frame::renderFrame(vector<Point> hits, int size) { //Visualizes hits given 
 
 	}
 
-	string Output;
-
-	for (int y = 0; y < height; y++) {
-
-		for (int x = 0; x < width; x++) {
-
-			Output += frameArray[y][x];
-
-		}
-
-		Output += "\n";
-
-	}
-
-	cout << Output;
+	printFrame(frameArray);
 
 }

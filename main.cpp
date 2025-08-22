@@ -46,9 +46,12 @@ int main() {
     string sentence;
     size_t delimiterPos; //size_t is an unsigned variable type
 
-    const int pointsNumber = 91; //The radar rotates 2 degrees at a time. So after sweeping the 180 degrees it sends 91 readings or "points" including the zero angle.
+    const int maxAngle = 180;
+    const int angleStep = 2;
 
-    vector<Point> Points(pointsNumber); 
+    int pointsNumber = (maxAngle / 2) + 1; //The radar rotates 2 degrees at a time. So after sweeping the 180 degrees it sends 90 readings or "points" plus the zero angle.
+
+    vector<Point> points(pointsNumber); 
 
     double distance;
     double angle;
@@ -83,11 +86,11 @@ int main() {
 
             size_t pointsIndex = angle / 2;
 
-            Points[pointsIndex] = newPoint;
+            points[pointsIndex] = newPoint;
 
             system("cls");
 
-			frame.renderFrame(Points, pointsNumber);
+			frame.renderFrame(points, pointsNumber);
 
             drawSweep(angle, frame.getWidth());
 
