@@ -9,7 +9,7 @@ class Frame {
 private:
 
 	const int width = 100; 
-	const int height = 51; 
+	const int height = 50; 
 
 public:
 

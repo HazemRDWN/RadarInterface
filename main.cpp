@@ -33,11 +33,12 @@ int main() {
 
             Point newPoint(angle, distance, frameWidth, frame.getHeight());
 
-            int index = (angle / 2) -1;
+            int index = (angle / 2) - 1;
 
             Points[index] = newPoint;
 
 			frame.renderFrame(Points, 90);
+            cout << Points[45].getY(); //________________REMOVE
 			system("cls");
 
         }
