@@ -8,37 +8,6 @@
 using namespace std;
 using namespace serial;
 
-void drawSweep(int angle, int frameWidth) {
-    
-    string sweepLine = "[ ";
-
-    double angleCoverage = (angle / 180.00) * 100.00;
-    double frameCoverage = 100 - ((angleCoverage / 100.00) * frameWidth);
-
-    for (int x = 1; x < frameWidth; x++) {
-
-        if (x == static_cast<int>(frameCoverage)) {
-
-            sweepLine += "- ";
-
-        }
-        else if (x == (frameWidth - 1)) {
-
-            sweepLine += "]";
-
-        }
-        else {
-
-            sweepLine += "  ";
-
-        }
-
-    }
-
-    cout << sweepLine;
-
-}
-
 int main() {
 
     Frame frame;
@@ -49,7 +18,7 @@ int main() {
     const int maxAngle = 180;
     const int angleStep = 2;
 
-    int pointsNumber = (maxAngle / 2) + 1; //The radar rotates 2 degrees at a time. So after sweeping the 180 degrees it sends 90 readings or "points" plus the zero angle.
+    int pointsNumber = (maxAngle / angleStep) + 1; //The radar rotates 2 degrees at a time. So after sweeping the 180 degrees it sends 90 readings or "points" plus the zero angle.
 
     vector<Point> points(pointsNumber); 
 
@@ -92,7 +61,7 @@ int main() {
 
 			frame.renderFrame(points, pointsNumber);
 
-            drawSweep(angle, frame.getWidth());
+            frame.drawSweep(angle, frame.getWidth());
 
         }
     }

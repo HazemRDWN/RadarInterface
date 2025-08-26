@@ -82,3 +82,34 @@ void Frame::renderFrame(vector<Point> hits, int size) const { //Visualizes hits 
 	printFrame(frameArray);
 
 }
+
+void Frame::drawSweep(int angle, int frameWidth) {
+
+	string sweepLine = "[ ";
+
+	double angleCoverage = (angle / 180.00) * 100.00; //How much of the radar's maximum angle has been covered
+	double frameCoverage = 100 - ((angleCoverage / 100.00) * frameWidth); //Calculate the horizontal coverage of radar based on the angle
+
+	for (int x = 1; x < frameWidth; x++) {
+
+		if (x == static_cast<int>(frameCoverage)) {
+
+			sweepLine += "- ";
+
+		}
+		else if (x == (frameWidth - 1)) {
+
+			sweepLine += "]";
+
+		}
+		else {
+
+			sweepLine += "  ";
+
+		}
+
+	}
+
+	cout << sweepLine;
+
+}

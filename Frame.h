@@ -16,6 +16,7 @@ private:
 public:
 
 	void renderFrame(std::vector<Point> hits, int size) const;
+	void drawSweep(int angle, int frameWidth);
 
 	int getWidth() const;
 	int getHeight() const;
