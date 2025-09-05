@@ -10,21 +10,21 @@ int Frame::getWidth() const { return width; }
 
 void Frame::printFrame(std::vector<std::vector<std::string>> finishedFrame) const {
 
-	stringstream Output;
+	stringstream output;
 
 	for (int y = 0; y < height; y++) {
 
 		for (int x = 0; x < width; x++) {
 
-			Output << finishedFrame[y][x];
+			output << finishedFrame[y][x];
 
 		}
 
-		Output << "\n";
+		output << "\n";
 
 	}
 
-	cout << Output.str();
+	cout << output.str();
 
 }
 
@@ -54,7 +54,7 @@ void Frame::renderFrame(vector<Point> hits, int size) const { //Visualizes hits 
 
 	for (int yFrameIndex = 0; yFrameIndex < height; yFrameIndex++) {
 
-		string Mark = "* - ";
+		string mark = "* - ";
 
 		bool indexToMark = (yFrameIndex == 39 || yFrameIndex == 29 || yFrameIndex == 19 || yFrameIndex == 9);
 
@@ -62,9 +62,9 @@ void Frame::renderFrame(vector<Point> hits, int size) const { //Visualizes hits 
 
 			string DistanceNum = to_string(((height - 1) - yFrameIndex)); //(height - 1) gives the actual last Y-coordinate since frameArray starts indexing from zero
 
-			Mark += DistanceNum + "cm";
+			mark += DistanceNum + "cm";
 
-			frameArray[yFrameIndex][width - 1] = Mark;
+			frameArray[yFrameIndex][width - 1] = mark;
 
 			frameArray[yFrameIndex][0] = "* "; //Mapping the left border
 

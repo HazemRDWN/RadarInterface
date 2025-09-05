@@ -8,12 +8,93 @@
 using namespace std;
 using namespace serial;
 
+string findPort() {
+
+    string port;
+
+    for (int portNum = 1; portNum <= 10; portNum++) {
+
+        port = "COM" + to_string(portNum);
+
+        try {
+
+            cout << "Trying COM" << portNum << endl;
+
+            Serial esp(port, 115200, Timeout::simpleTimeout(600));
+            string sentence = esp.readline();
+
+            size_t delimiterPos = sentence.find(':');
+            string marker = sentence.substr(0, delimiterPos);
+
+            if (marker == "RDR") {
+
+                return port;
+
+            }
+            else { continue; }
+
+        }
+        catch (const exception& e) {
+
+            cerr << "Error: " << e.what() << endl;
+
+        }
+
+    }
+
+    throw runtime_error("Valid serial port not found.");
+
+}
+
+string getCOM() {
+
+    while (true) {
+
+        cout << " Ultrasonic Radar Interface. \n \n Select COM selection method (Baudrate should be set to 115200): \n 1.Manual input \n 2.Automatic detection (Slower) \n \n Enter selection number: ";
+        string choice;
+        cin >> choice;
+
+        if (choice == "1") {
+
+            system("cls");
+
+            cout << "Enter COM number: ";
+            string COMnumber;
+            cin >> COMnumber;
+
+            string COMport = "COM" + COMnumber;
+            return COMport;
+
+        }
+
+        else if (choice == "2") {
+
+            system("cls");
+
+            return findPort(); 
+        
+        }
+
+        else { 
+        
+            system("cls");
+
+            cout << " Invalid input\n";
+            continue;
+        
+        }
+
+    }
+
+}
+
 int main() {
 
     Frame frame;
 
     string sentence;
     size_t delimiterPos; //size_t is an unsigned variable type
+    size_t markerEnd;
 
     const int maxAngle = 180;
     const int angleStep = 2;
@@ -25,9 +106,10 @@ int main() {
     double distance;
     double angle;
 
-    try {
+    try{
 
-        Serial esp("COM8", 115200, Timeout::simpleTimeout(600));
+        string port = getCOM();
+        Serial esp(port, 115200, Timeout::simpleTimeout(600));
 
         while (true) {
 
@@ -35,35 +117,47 @@ int main() {
 
             std::this_thread::sleep_for(timespan);
 
-			sentence = esp.readline();
+            sentence = esp.readline();
 
             try {
 
                 delimiterPos = sentence.find(',');
+                markerEnd = sentence.find(':');
 
-                distance = stof(sentence.substr(0, delimiterPos));
+                distance = stof(sentence.substr(markerEnd + 1, delimiterPos));
                 angle = stof(sentence.substr(delimiterPos + 1));
+
+                if (angle >= 0 && angle <= 180 && distance >= 0) {
+
+                    Point newPoint(angle, distance, frame.getWidth(), frame.getHeight());
+
+                    size_t pointsIndex = angle / 2;
+
+                    points[pointsIndex] = newPoint;
+
+                    system("cls");
+
+                    frame.renderFrame(points, pointsNumber);
+
+                    frame.drawSweep(angle, frame.getWidth());
+
+                }
+                else {
+
+                    cerr << "Error: A reading is out of bounds.";
+
+                }
 
             }
             catch (const exception& e) {
 
                 cerr << "Error: " << e.what() << endl;
+                return 0;
 
             }
 
-            Point newPoint(angle, distance, frame.getWidth(), frame.getHeight());
-
-            size_t pointsIndex = angle / 2;
-
-            points[pointsIndex] = newPoint;
-
-            system("cls");
-
-			frame.renderFrame(points, pointsNumber);
-
-            frame.drawSweep(angle, frame.getWidth());
-
         }
+
     }
     catch (const exception& e) {
 

@@ -16,9 +16,9 @@ void setup() {
 
 }
 
-float MeasureDistance(){
+float measureDistance(){
 
-    // Trigger the ultrasonic pulse
+  // Trigger the ultrasonic pulse
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
   digitalWrite(trigPin, HIGH);
@@ -39,13 +39,15 @@ void loop() {
 
   delay(500);
   
-  for (int i = 0; i <= 180; i = i + 2){
+  for (int i = 0; i <= 180; i = i + 2){ //Servo motion from 0 to 180 degrees
 
     delay(60);
 
     myServo.write(i);
 
-    Serial.print(MeasureDistance());
+    Serial.print("RDR");
+    Serial.print(":");
+    Serial.print(measureDistance());
     Serial.print(",");
     Serial.print(i);
     Serial.print("\n");
@@ -54,13 +56,15 @@ void loop() {
 
   delay(500);
 
-  for (int j = 180; j >= 0; j = j - 2){
+  for (int j = 180; j >= 0; j = j - 2){ //Servo motion from 180 back to 0 degrees
 
     delay(60);
 
     myServo.write(j);
 
-    Serial.print(MeasureDistance());
+    Serial.print("RDR");
+    Serial.print(":");
+    Serial.print(measureDistance());
     Serial.print(",");
     Serial.print(j);
     Serial.print("\n");
