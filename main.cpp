@@ -1,5 +1,6 @@
 #include <serial/serial.h> //To read from serial
 #include <cstdlib> //To use cls
+#include <windows.h> //To listen to key press
 #include <thread> 
 #include <iostream>
 #include "Frame.h"
@@ -7,6 +8,35 @@
 
 using namespace std;
 using namespace serial;
+
+bool validPort(string port) {
+
+    try {
+
+        cout << "Trying " << port << endl;
+
+        Serial esp(port, 115200, Timeout::simpleTimeout(600));
+        string sentence = esp.readline();
+
+        size_t delimiterPos = sentence.find(':');
+        string marker = sentence.substr(0, delimiterPos);
+
+        if (marker == "RDR") {
+
+            return true;
+
+        }
+        else { return false; }
+
+    }
+    catch (const exception& e) {
+
+        cerr << "Error: " << e.what() << endl;
+        return false;
+
+    }
+
+}
 
 string findPort() {
 
@@ -16,27 +46,14 @@ string findPort() {
 
         port = "COM" + to_string(portNum);
 
-        try {
+        if (validPort(port)) {
 
-            cout << "Trying COM" << portNum << endl;
-
-            Serial esp(port, 115200, Timeout::simpleTimeout(600));
-            string sentence = esp.readline();
-
-            size_t delimiterPos = sentence.find(':');
-            string marker = sentence.substr(0, delimiterPos);
-
-            if (marker == "RDR") {
-
-                return port;
-
-            }
-            else { continue; }
+            return port;
 
         }
-        catch (const exception& e) {
+        else {
 
-            cerr << "Error: " << e.what() << endl;
+            continue;
 
         }
 
@@ -50,7 +67,7 @@ string getCOM() {
 
     while (true) {
 
-        cout << " Ultrasonic Radar Interface. \n \n Select COM selection method (Baudrate should be set to 115200): \n 1.Manual input \n 2.Automatic detection (Slower) \n \n Enter selection number: ";
+        cout << " Ultrasonic Radar Interface. \n \n Select COM selection method (Baudrate should be set to 115200): \n 1.Manual input \n 2.Automatic detection (Slower) \n 3.Exit \n \n Press 'E' to exit once program is started. \n \n Enter selection number: ";
         string choice;
         cin >> choice;
 
@@ -63,7 +80,16 @@ string getCOM() {
             cin >> COMnumber;
 
             string COMport = "COM" + COMnumber;
-            return COMport;
+
+            if (validPort(COMport)) { return COMport; }
+            else {
+
+                system("cls");
+
+                cout << " Invalid COM number. \n \n";
+                continue;
+
+            }
 
         }
 
@@ -75,11 +101,17 @@ string getCOM() {
         
         }
 
+        else if (choice == "3") {
+
+            return "exit";
+
+        }
+
         else { 
         
             system("cls");
 
-            cout << " Invalid input\n";
+            cout << " Invalid input. \n \n";
             continue;
         
         }
@@ -109,50 +141,60 @@ int main() {
     try{
 
         string port = getCOM();
-        Serial esp(port, 115200, Timeout::simpleTimeout(600));
 
-        while (true) {
+        if (port == "exit") {
 
-            std::chrono::microseconds timespan(1000);
+            return 0;
 
-            std::this_thread::sleep_for(timespan);
+        }
+        else {
 
-            sentence = esp.readline();
+            Serial esp(port, 115200, Timeout::simpleTimeout(600));
 
-            try {
+            while (!GetAsyncKeyState('E')) {
 
-                delimiterPos = sentence.find(',');
-                markerEnd = sentence.find(':');
+                std::chrono::microseconds timespan(1000);
 
-                distance = stof(sentence.substr(markerEnd + 1, delimiterPos));
-                angle = stof(sentence.substr(delimiterPos + 1));
+                std::this_thread::sleep_for(timespan);
 
-                if (angle >= 0 && angle <= 180 && distance >= 0) {
+                sentence = esp.readline();
 
-                    Point newPoint(angle, distance, frame.getWidth(), frame.getHeight());
+                try {
 
-                    size_t pointsIndex = angle / 2;
+                    delimiterPos = sentence.find(',');
+                    markerEnd = sentence.find(':');
 
-                    points[pointsIndex] = newPoint;
+                    distance = stof(sentence.substr(markerEnd + 1, delimiterPos));
+                    angle = stof(sentence.substr(delimiterPos + 1));
 
-                    system("cls");
+                    if (angle >= 0 && angle <= 180 && distance >= 0) {
 
-                    frame.renderFrame(points, pointsNumber);
+                        Point newPoint(angle, distance, frame.getWidth(), frame.getHeight());
 
-                    frame.drawSweep(angle, frame.getWidth());
+                        size_t pointsIndex = angle / 2;
+
+                        points[pointsIndex] = newPoint;
+
+                        system("cls");
+
+                        frame.renderFrame(points, pointsNumber);
+
+                        frame.drawSweep(angle, frame.getWidth());
+
+                    }
+                    else {
+
+                        cerr << "Error: A reading is out of bounds.";
+
+                    }
 
                 }
-                else {
+                catch (const exception& e) {
 
-                    cerr << "Error: A reading is out of bounds.";
+                    cerr << "Error: " << e.what() << endl;
+                    return 0;
 
                 }
-
-            }
-            catch (const exception& e) {
-
-                cerr << "Error: " << e.what() << endl;
-                return 0;
 
             }
 
