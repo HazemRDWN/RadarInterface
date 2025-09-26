@@ -10,7 +10,7 @@
 - **The ESP end**: Open the ESP folder and upload the Radar.io sketch on the ESP8266. Make sure the ESP is sending over serial with 115200 baud rate and that no other program is reading serial data aside from this RadarInterface.
 - **The desktop end**: simply compile and run the main.cpp file.
 
-*A schematic of the radar connections will be provided soon*
+<img width="1169" height="827" alt="Schematic_Ultrasonic-radar_2025-09-26" src="https://github.com/user-attachments/assets/555345b6-53d2-48ed-b810-e1f9f9620be6" />
 
 # Development notes:
 
