@@ -25,8 +25,8 @@ int Point::Ycoordinate(double distance, double angle) const {
 
 }
 
-Point::Point(): Y(1024), X(1024) {} //Default to 1024 because that is the highest reading the sensor sends
-Point::Point(double Angle, double Distance, int Width, int Height): X(Xcoordinate(Distance, Angle)), Y(Ycoordinate(Distance, Angle)), frameWidth(Width), frameHeight(Height){}
+Point::Point(): X(1024), Y(1024) {} //Default to 1024 because that is the highest reading the sensor sends
+Point::Point(double Angle, double Distance, int Width, int Height): frameWidth(Width), frameHeight(Height), X(Xcoordinate(Distance, Angle)), Y(Ycoordinate(Distance, Angle)){}
 
 int Point::getX() const { return X; }
 
