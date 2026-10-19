@@ -4,11 +4,11 @@ class Point {
 
 private:
 
-	int X;
-	int Y;
-
 	int frameWidth; //Frame dimensions needed to translate the X and Y coordinates accordingly
 	int frameHeight;
+
+	int X;
+	int Y;
 
 	int Xcoordinate(double distance, double angle) const;
 	int Ycoordinate(double distance, double angle) const;
