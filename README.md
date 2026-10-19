@@ -7,8 +7,8 @@
 
 ## To get started you'll need to setup both ends:
 
-- **The ESP end**: Open the ESP folder and upload the Radar.io sketch on the ESP8266. Make sure the ESP is sending over serial with 115200 baud rate and that no other program is reading serial data aside from this RadarInterface.
-- **The desktop end**: simply compile and run the main.cpp file.
+- **The ESP end**: Open the ESP folder and upload the Radar.ino sketch on the ESP8266. Make sure the ESP is sending over serial with 115200 baud rate and that no other program is reading serial data aside from this RadarInterface.
+- **The desktop end**: simply compile and run the main.cpp file on your windows machine, make sure the serial library is available.
 
 <img width="1169" height="827" alt="Schematic_Ultrasonic-radar_2025-09-26" src="https://github.com/user-attachments/assets/555345b6-53d2-48ed-b810-e1f9f9620be6" />
 
@@ -20,7 +20,7 @@
 - The frame rendering was done on the ESP in the beginning which resulted in the frames appearing slowly. This was caused by the large amount of serial prints being sent in a short time crowding the buffer resulting in a queue.
     - *Solution: transferring the frame rendering to the device that will show the frames, the computer, allowing the ESP to only send angle and distance readings.*
 
-- The frames were being printed character by character in the console which was very ineffecient and showed while the frame was being displayed.
+- The frames were being printed character by character in the console which was very inefficient and showed while the frame was being displayed.
     - *Solution: "pre-rendering" the lines that do not include hits and printing them entirely, only printing character by character in lines that include hits.*
 
 - Showing more than one hit per frame was difficult to implement because the code was cluttered with loops, the logic barely held together.
